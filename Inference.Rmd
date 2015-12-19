@@ -1,0 +1,47 @@
+---
+title: "CLT Exponential Distribution Example"
+author: "tbudd"
+date: "December 19, 2015"
+output: html_document
+---
+## Overview
+
+## Simulations
+One simulation was run which collected 1000 samples of the mean of 40 exponential distributions with lambda = 0.2
+
+```{r}
+set.seed(4321) ## set seed so this is reproducible
+mns = NULL ## mns captures a vector of means; initialize to NULL
+
+## Get 1000 samples of the mean of 40 exponential distributions with lambda = 0.2
+for (i in 1 : 1000) mns = c(mns, mean(rexp(40,0.2)))
+
+```
+
+## Sample Mean vs. Theoretical Mean
+The theoretical mean of the sample is the same as the mean of an exponential distribution, because of the CLT, so it is 1/lambda = 1/0.2 = 5.0.
+The sample mean is calculated below.
+```{r}
+mean(mns) 
+```
+
+As can be seen in the calculation above. The sample mean agrees closely with the theoretical sample mean. The sample mean is plotted on the histogram of the means of 40 exponential pdfs with lambda = 0.2 below.
+```{r}
+hist(mns,21,xlab="means",main="Histogram of 1000 Samples of the Mean of 40 Exponentials")
+abline(v = 5, col = "blue", lwd = 2)
+```
+
+
+## Sample Variance vs. Theoretical Variance
+The theoretical variance is 1/lambda^2 = 1/0.2^2 = 25
+The sample variance is calculated below.
+```{r}
+var(mns) 
+```
+
+## Distribution
+Plot the histogram of means of 40 exponential pdfs with lambda = 0.2
+```{r}
+hist(mns,21,xlab="means",main="Histogram of 1000 Samples of the Mean of 40 Exponentials")
+abline(v = 5, col = "blue", lwd = 2)
+```
