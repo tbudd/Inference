@@ -60,4 +60,5 @@ Plot the histogram of means of 40 exponential pdfs with lambda = 0.2
 ```{r}
 hist(mns,21,xlab="means",main="Figure 4: Histogram of 1000 Simulations of the Mean of 40 Exponentials")
 abline(v = 5, col = "blue", lwd = 2)
+curve(dnorm(x, mean=mean(mns), sd=sd(mns)), col="darkblue", lwd=2, add=TRUE)
 ```
