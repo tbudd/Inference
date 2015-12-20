@@ -5,43 +5,59 @@ date: "December 19, 2015"
 output: html_document
 ---
 ## Overview
+[Expontential Distribution](https://en.wikipedia.org/wiki/Exponential_distribution)
 
 ## Simulations
-One simulation was run which collected 1000 samples of the mean of 40 exponential distributions with lambda = 0.2
+1000 Simulations were run of the mean of 40 exponential distributions with lambda = 0.2
 
 ```{r}
 set.seed(4321) ## set seed so this is reproducible
 mns = NULL ## mns captures a vector of means; initialize to NULL
+nosims = 1000 ## the number of simulations
+lambda = 0.2
+n = 40 ## sample size
 
 ## Get 1000 samples of the mean of 40 exponential distributions with lambda = 0.2
-for (i in 1 : 1000) mns = c(mns, mean(rexp(40,0.2)))
+for (i in 1 : nosims) mns = c(mns, mean(rexp(n,lambda)))
 
 ```
 
 ## Sample Mean vs. Theoretical Mean
-The theoretical mean of the sample is the same as the mean of an exponential distribution, because of the CLT, so it is 1/lambda = 1/0.2 = 5.0.
-The sample mean is calculated below.
-```{r}
-mean(mns) 
+The theoretical mean of the mean of 40 distributions is the same as the mean of an exponential distribution, because of the Central Limit Theorem, so it is 1/lambda = 1/0.2 = 5.0.
+The sample mean is calculated in the code chunk below and shown in Figure 1.
+```{r kable,results='asis'}
+library(knitr)
+Parameter<-c("Exponential Mean","Theoretic Mean of Means", "Simulation Mean of Means")
+Formula<-c("1/lamda","1/lambda","mean(means)")
+Result<-c(1/lambda,1/lambda,mean(mns))
+Fig1<-cbind(Parameter,Formula,Result)
+kable(Fig1,caption="Figure 1: Mean of Means Calculations")
 ```
 
-As can be seen in the calculation above. The sample mean agrees closely with the theoretical sample mean. The sample mean is plotted on the histogram of the means of 40 exponential pdfs with lambda = 0.2 below.
+As can be seen in Figure 1, the simulation mean agrees closely with the theoretical mean of means. The sample mean is plotted on the histogram of the means of 40 exponential pdfs with lambda = 0.2 below in Figure 2.
 ```{r}
-hist(mns,21,xlab="means",main="Histogram of 1000 Samples of the Mean of 40 Exponentials")
+hist(mns,21,xlab="means",main="Figure 2: Histogram of 1000 Simulations of the Mean of 40 Exponentials")
 abline(v = 5, col = "blue", lwd = 2)
 ```
 
 
 ## Sample Variance vs. Theoretical Variance
-The theoretical variance is 1/lambda^2 = 1/0.2^2 = 25
-The sample variance is calculated below.
+The variance of mean samples is the variance of the exponential distribution / the number of samples (the square of the standard error). The variance of the exponential is 1/lambda^2, so the theoretical variance of the mean of 40 means of exponentials is 1/(lambda^2*n) = 1/(0.2^2*40)=0.625.
+
+The sample variance is calculated in the code chunk below and shown in Figure 3.
 ```{r}
-var(mns) 
+Parameter<-c("Exponential Variance","Theoretic Variance of Means", "Simulation Variance of Means")
+Formula<-c("1/lamda^2","1/(lambda^2*n)","variance(means)")
+Result<-c(1/lambda^2,1/(lambda^2*n),var(mns))
+Fig3<-cbind(Parameter,Formula,Result)
+kable(Fig3,caption="Figure 3: Variation of Means Calculations")
 ```
+
+As can been seen in Figure 3 above, the variance of the means from the simulation agrees well with the thoretical variance of means.
 
 ## Distribution
 Plot the histogram of means of 40 exponential pdfs with lambda = 0.2
 ```{r}
-hist(mns,21,xlab="means",main="Histogram of 1000 Samples of the Mean of 40 Exponentials")
+hist(mns,21,xlab="means",main="Figure 4: Histogram of 1000 Simulations of the Mean of 40 Exponentials")
 abline(v = 5, col = "blue", lwd = 2)
 ```
